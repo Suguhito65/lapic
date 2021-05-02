@@ -47,7 +47,9 @@ class PostController extends Controller
 
         $post->save();
 
-       return redirect('/');
+        \Session::flash('err_msg', '登録しました。');
+
+        return redirect('/');
     }
 
     /**
@@ -74,7 +76,7 @@ class PostController extends Controller
     public function edit($id)
     {
         $post = Post::findOrFail($id);
-
+        $this->authorize('edit', $post); // 認可
         return view('posts.edit',[
             'post' => $post,
             'id' => $id
@@ -93,10 +95,12 @@ class PostController extends Controller
         $id = $request->post_id;
         
         $post = Post::findOrFail($id);
-        
+        $this->authorize('edit', $post); // 認可
         $post->body = $request->body;
         
         $post->save();
+
+        \Session::flash('err_msg', '更新しました。');
         
         return redirect('/');
     }
@@ -109,8 +113,11 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $post = \App\Post::find($id);
+        $post = Post::find($id);
+        $this->authorize('edit', $post); // 認可
         $post->delete();
+
+        \Session::flash('err_msg', '削除しました。');
 
         return redirect('/');
     }

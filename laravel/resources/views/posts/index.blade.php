@@ -4,6 +4,11 @@
 <div class="container">
     <div class="row">
         <div class="col-10 col-md-8 offset-1 offset-md-2">
+            @if (session('err_msg'))
+                <p class="text-danger">
+                    {{ session('err_msg') }}
+                </p>
+            @endif
             <table class="table">
                 <tbody>
                     <tr>

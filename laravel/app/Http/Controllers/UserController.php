@@ -57,7 +57,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $this->authorize('edit', $user); // 認可
+        return view('users.edit', ['user' => $user]);
     }
 
     /**
@@ -69,7 +70,8 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $this->authorize('edit', $user); // 認可
+        return view('users.edit', ['user' => $user]);
     }
 
     /**

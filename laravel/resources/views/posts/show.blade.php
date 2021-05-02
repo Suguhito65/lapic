@@ -13,14 +13,16 @@
                 <p class="card-text">
                     <span class="font-weight-bold">内容：</span>{{ $post->body }}
                 </p>
-                <div class="row justify-content-center mt-3">
-                    <a href="{{ route('posts.edit',['id' => $post->id]) }}" class="btn btn-success mr-3">編集</a>
-                
-                    <form action="{{ route('posts.destroy', ['id' => $post->id]) }}" method="POST">
-                        {{ csrf_field() }}
-                        <button type="submit" class="delete btn btn-danger">削除</button>
-                    </form>
-                </div>
+                @can('edit', $post)
+                    <div class="row justify-content-center mt-3">
+                        <a href="{{ route('posts.edit',['id' => $post->id]) }}" class="btn btn-success mr-3">編集</a>
+                    
+                        <form action="{{ route('posts.destroy', ['id' => $post->id]) }}" method="POST">
+                            {{ csrf_field() }}
+                            <button type="submit" class="delete btn btn-danger">削除</button>
+                        </form>
+                    </div>
+                @endcan
             </div>
         </div>
     </div>

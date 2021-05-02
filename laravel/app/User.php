@@ -33,7 +33,18 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
+    // protected $casts = [
+    //     'email_verified_at' => 'datetime',
+    // ];
+
+    /**
+     * 現在のユーザー、または引数で渡されたIDが管理者かどうかを返す
+     *
+     * @param  number  $id  User ID
+     * @return boolean
+     */
+    public function isAdmin($id = null) {
+        $id = ($id) ? $id : $this->id;
+        return $id == config('admin_id');
+    }
 }

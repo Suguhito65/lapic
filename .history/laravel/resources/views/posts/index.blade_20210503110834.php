@@ -15,6 +15,14 @@
             @include('posts.card')
 
         @endforeach
+        <!-- ページネーション -->
+        @if(isset($tag_name))
+            {{ $posts->appends(['tag_name' => $tag_name])->links() }}
+        @elseif(isset($search_query))
+            {{ $posts->appends(['search' => $search_query])->links() }}
+        @else
+            {{ $posts->links() }}
+        @endif
     </div>
 </div>
 @endsection

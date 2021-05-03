@@ -39,9 +39,7 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="{{ route('users.show', ['user' => Auth::user()->id]) }}">{{ Auth::user()->name }}</a>
-                            </li>
+                        
                             <li class="nav-item">
                                 <a class="nav-link text-white" href="{{ route('posts.create') }}">{{ __('新規投稿') }}</a>
                             </li>

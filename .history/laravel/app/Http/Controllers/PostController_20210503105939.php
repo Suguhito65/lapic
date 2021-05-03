@@ -126,18 +126,5 @@ class PostController extends Controller
         return redirect('/');
     }
 
-    // 検索機能
-    public function search(Request $request)
-    {
-        $posts = Post::where('body', 'like', '%'.$request->search.'%')
-            ->paginate(3);
-
-        $search_result = $request->search.'の検索結果は'.$posts->total().'件';
-
-        return view('posts.index', [
-            'posts' => $posts,
-            'search_result' => $search_result,
-            'search_query'  => $request->search
-        ]);
-    }
+    
 }

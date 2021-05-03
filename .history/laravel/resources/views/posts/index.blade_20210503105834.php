@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'トップページ')
 @section('content')
-@include('posts.search')
+
 <div class="container">
     <div class="row">
         <div class="col-10 col-md-8 offset-1 offset-md-2">

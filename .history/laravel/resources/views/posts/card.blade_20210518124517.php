@@ -1,0 +1,49 @@
+<div class="col-md-4">
+    <div class="card mb-5 shadow">
+        <div class="card-header text-center text-white" style="background: linear-gradient(45deg, #add8e6, #00f, #add8e6)">
+            {{ $post->title }}
+        </div>
+        <div class="card-body">
+            <div class="card-title">
+                <i class="fas fa-user-circle"></i><strong> 投稿者</strong>
+                <a href="{{ route('users.show', $post->user_id) }}" class="text-dark btn">
+                    {{ $post->user->name }}
+                </a>
+            </div>
+            <div class="card-title text-break">
+                <i class="fas fa-comment-dots"></i>
+                <strong> 投稿</strong>　{{ $post->body }}
+            </div>
+            <div class="card-title">
+                <i class="fas fa-child"></i><strong> カテゴリー</strong>
+                <a href="{{ route('posts.index', ['category_id' => $post->category_id]) }}" class="text-dark btn">
+                    {{ $post->category->category_name }}
+                </a>
+            </div>
+            <div class="row justify-content-around card-footer bg-transparent pt-4">
+                @guest
+                    <div>
+                        <a href="{{ route('login') }}" class="btn">
+                            <i class="far fa-heart" style="color: #ee82ee"></i> {{ $post->likes->count() }}
+                        </a>
+                    </div>
+                @else
+                    <like
+                        :post-id="{{ json_encode($post->id) }}"
+                        :user-id="{{ json_encode($userAuth->id) }}"
+                        :default-Liked="{{ json_encode($post->defaultLiked($post, $userAuth->id)) }}"
+                        :default-Count="{{ json_encode(count($post->likes)) }}"
+                    ></like>
+                @endguest
+                <div class="btn" style="cursor: default">
+                    <i class="far fa-comment-alt text-primary"></i> {{ $post->comments->count() }}
+                </div>
+                <div>
+                    <a href="{{ route('posts.show', ['post' => $post->id]) }}" class="btn">
+                        <i class="fas fa-pen text-success"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

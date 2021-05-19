@@ -26,8 +26,10 @@
                 </div>
                 <div class="card-footer bg-transparent">
                     @if ($image)
-                        <!-- ローカル -->
-                        <p class="text-center"><img class="img-fluid" src="/{{ $image }}"></p>
+                        @if (App::environment('local'))
+                            <!-- ローカル -->
+                            <p class="text-center"><img class="img-fluid" src="/{{ $image }}"></p>
+                        @endif
                     @endif
                 </div>
                 <like class="text-center"

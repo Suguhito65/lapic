@@ -76,8 +76,13 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->body = $request->body;
 
-        $time = date("Ymdhis");
-        $post->image = $request->image->storeAs('public/post_images', $time.'_'.Auth::user()->id. '.jpg');
+        if ( app()->isLocal() || app()->runningUnitTests() ) {
+            // テスト環境, ローカル環境用の記述
+            $time = date("Ymdhis");
+            $post->image = $request->image->storeAs('public/post_images', $time.'_'.Auth::user()->id. '.jpg');
+          } else {
+            // 本番環境用の記述
+          }
 
         $post->save();
 
@@ -157,11 +162,16 @@ class PostController extends Controller
         $post->body = $request->body;
         $post->category_id = $request->category_id;
 
-        if($request->hasFile('image')) {
-            Storage::delete('public/post_images/' . $post->image); // 画像削除
-            $time = date("Ymdhis");
-            $post->image = $request->image->storeAs('public/post_images', $time.'_'.Auth::user()->id. '.jpg');
-        }
+        if ( app()->isLocal() || app()->runningUnitTests() ) {
+            // テスト環境, ローカル環境用の記述
+            if($request->hasFile('image')) {
+                Storage::delete('public/post_images/' . $post->image); // 画像削除
+                $time = date("Ymdhis");
+                $post->image = $request->image->storeAs('public/post_images', $time.'_'.Auth::user()->id. '.jpg');
+            }
+          } else {
+            // 本番環境用の記述
+          }
 
         $post->save();
 
@@ -192,7 +202,8 @@ class PostController extends Controller
     {
         $userAuth = \Auth::user(); // いいね
 
-        $posts = Post::where('body', 'like', '%'.$request->search.'%')
+        $posts = Post::where('title', 'LIKE', '%'.$request->search.'%')
+                ->orWhere('body', 'LIKE', '%'.$request->search.'%')
                 ->paginate(6);
 
         $search_result = $request->search.'の検索結果は'.$posts->total().'件';

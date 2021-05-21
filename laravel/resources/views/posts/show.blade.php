@@ -27,8 +27,9 @@
                 <div class="card-footer bg-transparent">
                     @if ($image)
                         @if (App::environment('local'))
-                            <!-- ローカル -->
                             <p class="text-center"><img class="img-fluid" src="/{{ $image }}"></p>
+                        @else
+                            <!-- 本番環境を記述 -->
                         @endif
                     @endif
                 </div>

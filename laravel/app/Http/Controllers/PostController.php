@@ -77,11 +77,11 @@ class PostController extends Controller
         $post->body = $request->body;
 
         if ( app()->isLocal() || app()->runningUnitTests() ) {
-            // テスト環境, ローカル環境用の記述
+            // ローカル環境, テスト環境
             $time = date("Ymdhis");
             $post->image = $request->image->storeAs('public/post_images', $time.'_'.Auth::user()->id. '.jpg');
           } else {
-            // 本番環境用の記述
+            // 本番環境
           }
 
         $post->save();
@@ -163,14 +163,14 @@ class PostController extends Controller
         $post->category_id = $request->category_id;
 
         if ( app()->isLocal() || app()->runningUnitTests() ) {
-            // テスト環境, ローカル環境用の記述
+            // ローカル環境, テスト環境
             if($request->hasFile('image')) {
                 Storage::delete('public/post_images/' . $post->image); // 画像削除
                 $time = date("Ymdhis");
                 $post->image = $request->image->storeAs('public/post_images', $time.'_'.Auth::user()->id. '.jpg');
             }
           } else {
-            // 本番環境用の記述
+            // 本番環境
           }
 
         $post->save();

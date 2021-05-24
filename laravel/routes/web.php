@@ -24,3 +24,6 @@ Route::resource('posts', 'PostController', ['except' => ['index', 'update']])->m
 Route::post('posts/edit', 'PostController@update')->name('posts.update');
 // コメント
 Route::resource('comments', 'CommentController', ['only' => ['create', 'store', 'destroy']])->middleware('auth');
+// googleログイン
+Route::get('login/google', 'Auth\LoginController@redirectToGoogle');
+Route::get('login/google/callback', 'Auth\LoginController@handleGoogleCallback');

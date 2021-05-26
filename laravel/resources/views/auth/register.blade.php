@@ -35,6 +35,11 @@
                     </div>
                 </form>
                 <a class="nav-link text-right" href="{{ route('login') }}">{{ __('ログイン') }}</a>
+                <div class="text-center">
+                    <a href="/login/google" class="btn text-white" role="button" style="background: #ff4500; border-radius: 1.2em">
+                        <i class="fab fa-google"></i>　Google ログイン
+                    </a>
+                </div>
             </div>
         </div>
     </div>

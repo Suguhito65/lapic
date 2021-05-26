@@ -76,8 +76,8 @@ class PostController extends Controller
         $post->title = $request->title;
         $post->body = $request->body;
 
-        if ( app()->isLocal() || app()->runningUnitTests() ) {
-            // ローカル環境, テスト環境
+        if (app()->isLocal()) {
+            // ローカル環境
             $time = date("Ymdhis");
             $post->image = $request->image->storeAs('public/post_images', $time.'_'.Auth::user()->id. '.jpg');
           } else {
@@ -162,8 +162,8 @@ class PostController extends Controller
         $post->body = $request->body;
         $post->category_id = $request->category_id;
 
-        if ( app()->isLocal() || app()->runningUnitTests() ) {
-            // ローカル環境, テスト環境
+        if ( app()->isLocal()) {
+            // ローカル環境
             if($request->hasFile('image')) {
                 Storage::delete('public/post_images/' . $post->image); // 画像削除
                 $time = date("Ymdhis");
